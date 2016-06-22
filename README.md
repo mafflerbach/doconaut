@@ -1,5 +1,5 @@
 I have used for a while github.io for documentation a project.
-In this case, i'am implement a little helper script, which generate a TOC from all <h*> tags.
+In this case, i'am implement a little helper script, which generate a TOC from all h* tags.
 I have also implemented an impot Tag for a better organisation for my different sections and of course for reusing some documentation snippets.
 
 The genearl using ist quite simple:
