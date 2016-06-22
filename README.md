@@ -42,4 +42,4 @@ Here the Javascript side:
       }
     });
 
-you can see a live demo under [link]
+you can see a live demo under https://mafflerbach.github.io/htmlDoc/
