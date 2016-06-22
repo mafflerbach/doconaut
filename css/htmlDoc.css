@@ -1,0 +1,27 @@
+.htmlDoc_H1 {
+  margin:0;
+}
+
+.htmlDoc_H2 {
+  margin-left:0.5rem;
+}
+
+.htmlDoc_H3 {
+  margin-left:1rem;
+}
+
+.htmlDoc_H4 {
+  margin-left:1.5rem;
+}
+
+.htmlDoc_H5 {
+  margin-left:2rem;
+}
+
+.htmlDoc_H6 {
+  margin-left:2.5rem;
+}
+
+.htmlDoc_fixed {
+  position: fixed;
+}
