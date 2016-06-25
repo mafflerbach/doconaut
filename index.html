@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="css/print.css"/>
     <link rel="stylesheet" href="css/simplegrid.css"/>
     <link rel="stylesheet" href="css/htmlDoc.css"/>
   </head>
@@ -12,11 +13,12 @@
 
       <div class="col-8-12">
         <div class="content">
-          <!-- import the complete document -->
-          <import src="import.xml"></import>
 
           <!-- import the html fragment with the id content1-->
-          <import src="import.xml#content1"></import>
+          <div src="import.xml"></div>
+        </div>
+        <div id="listing">
+
         </div>
       </div>
     </div>
@@ -26,16 +28,73 @@
   <script type="text/javascript">
 
     /**
+     * if you only want generate the table of content
+     */
+    /*$('#menu').buildToc({
+     depth: 0,
+     fixedAt: false,
+     format: false,
+     smoothScrolling: false,
+     }); */
+
+    /**
+     * if you use the import function and want to generate the table of content
+     */
+    /* $('import').importHTML({
+     menu: $('#menu'),
+     });
+     */
+    /**
      * you can use the settings object
      */
-    $('import').importHTML({
-      menu: $('#menu'),
-      menuSettings: {
+    $('div').importHTML({
+      menu: {
+        appendTo: $('#menu'),
         depth: 0,
-        fixedAt: 1,
+        fixedAt: true,
         format: true,
         smoothScrolling: true,
-      }
+      },
+      normaliseImages: true,
+      normaliseTables: true,
+      normaliseExamples: true,
+      // for explicit generation
+      /*
+       if appendTo not defined, it will append to $('body')
+       listOfExamples: {
+       appendTo: $('#listing')
+       },
+       // for explicit generation
+       listOfTables: {
+       appendTo: $('#listing')
+       },
+       // for explicit generation
+       listOfFigure: {
+       appendTo: $('#listing')
+       }, */
+      /**
+       *  if appendTo not defined, it will append to $('body')
+       *  generate appendix automated with list of examples. list of tables and list of figures
+       */
+      appendix: {
+        appendTo: $('#listing'),
+      },
+      /**
+       *
+       deaktivate the specifics lists:
+       appendix: {
+        appendTo: $('#listing'),
+        listOfFigure : false,
+        listOfTables : false,
+        listOfExamples : false
+      },
+       */
+      /* Comming soon
+       bibliography: true,
+       footnotes: true,
+       glossary: true,
+       */
     });
+
   </script>
 </html>

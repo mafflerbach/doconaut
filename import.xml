@@ -1,6 +1,6 @@
 <root>
   <content id="content1">
-    <h1>Headding 1</h1>
+    <h1>Heading 1</h1>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
       et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
       Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
@@ -8,7 +8,7 @@
       erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
       no sea takimata sanctus est Lorem ipsum dolor sit amet.
     </p>
-    <h2>Headding 2</h2>
+    <h2>Heading 2</h2>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
       et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
       Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
@@ -16,11 +16,12 @@
       erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
       no sea takimata sanctus est Lorem ipsum dolor sit amet.
     </p>
+    <a href="google.de">google.de</a>
 
   </content>
   <content id="content2">
 
-    <h3>Headding 3</h3>
+    <h3>Heading 3</h3>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
       et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
       Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
@@ -28,7 +29,7 @@
       erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
       no sea takimata sanctus est Lorem ipsum dolor sit amet.
     </p>
-    <h4>Headding 4</h4>
+    <h4>Heading 4</h4>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
       et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
       Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
@@ -36,7 +37,7 @@
       erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
       no sea takimata sanctus est Lorem ipsum dolor sit amet.
     </p>
-    <h5>Headding 5</h5>
+    <h5>Heading 5</h5>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
       et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
       Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
@@ -44,8 +45,8 @@
       erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
       no sea takimata sanctus est Lorem ipsum dolor sit amet.
     </p>
-    <h3>Headding 3</h3>
-    <h6>Headding 6</h6>
+    <h3>Heading 3</h3>
+    <h6>Heading 6</h6>
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
       et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
       Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
@@ -53,6 +54,67 @@
       erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
       no sea takimata sanctus est Lorem ipsum dolor sit amet.
     </p>
+  </content>
+
+  <content id="images">
+    <img src="http://placekitten.com/200/300" title="Title 1"/>
+    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+      et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+      <img src="http://placekitten.com/200/300" title="Title 2"/>
+      amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+      erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+      no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </p>
+
+    <img src="http://placekitten.com/300/300"/>
+    <img src="http://placekitten.com/200/200" title="Title 5"/>
+    <img src="http://placekitten.com/300/200" title="Title 6"/>
+
+
+  </content>
+
+  <content id="tables">
+    <table summary="overview ">
+      <tr>
+        <td>Content 1.1</td>
+        <td>Content 1.1</td>
+      </tr>
+      <tr>
+        <td>Content 2.1</td>
+        <td>Content 2.2</td>
+      </tr>
+      <tr>
+        <td>Content 3.1</td>
+        <td>Content 3.2</td>
+      </tr>
+    </table>
+
+    <table summary="overview 2 ">
+      <tr>
+        <td>Content 1.1</td>
+        <td>Content 1.1</td>
+      </tr>
+      <tr>
+        <td>Content 2.1</td>
+        <td>Content 2.2</td>
+      </tr>
+      <tr>
+        <td>Content 3.1</td>
+        <td>Content 3.2</td>
+      </tr>
+    </table>
+
+  </content>
+
+  <content id="codeExamples">
+    <code>
+      Some example
+    </code>
+
+    <code title="next example">
+      Yet another example
+    </code>
   </content>
 
 </root>
