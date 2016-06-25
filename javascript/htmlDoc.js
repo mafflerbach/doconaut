@@ -91,8 +91,11 @@
 
         var id = getGuid($(this).text(), headlines )
 
+        console.log($(this)[0].className)
+        if ($(this)[0].className != '') {
 
-        var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\">" + $(this).text() + "</" + $(this)[0].nodeName + "></a>";
+        }
+        var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\""+$(this)[0].className+"\">" + $(this).text() + "</" + $(this)[0].nodeName + "></a>";
         $(this).replaceWith(replacement);
 
         var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).text() + '</a>')
@@ -164,7 +167,6 @@
   function getGuid(str, headlines) {
 
     var id = guid(str.replace(/ /g, '_'));
-    console.log(id);
     if (!inArray(id, headlines)) {
       headlines.push(id);
     } else {
