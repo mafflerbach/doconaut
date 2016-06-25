@@ -1,27 +1,54 @@
+
 .htmlDoc_H1 {
-  margin:0;
+  margin: 0;
 }
 
 .htmlDoc_H2 {
-  margin-left:0.5rem;
+  margin-left: 0.5rem;
 }
 
 .htmlDoc_H3 {
-  margin-left:1rem;
+  margin-left: 1rem;
 }
 
 .htmlDoc_H4 {
-  margin-left:1.5rem;
+  margin-left: 1.5rem;
 }
 
 .htmlDoc_H5 {
-  margin-left:2rem;
+  margin-left: 2rem;
 }
 
 .htmlDoc_H6 {
-  margin-left:2.5rem;
+  margin-left: 2.5rem;
 }
 
 .htmlDoc_fixed {
   position: fixed;
+}
+
+code {
+  display: block;
+  border: 1px solid black;
+  padding: 2rem;
+}
+
+.htmlDoc_image {
+  display: inline-block;
+  padding-bottom: 1.5em;
+  position: relative;
+}
+
+.htmlDoc_image span,
+.htmlDoc_table span,
+.htmlDoc_table span {
+  position: absolute;
+  bottom: 0.5em;
+  left: 0px;
+}
+
+.htmlDoc_table {
+  display: table;
+  padding-bottom: 1.5em;
+  position: relative;
 }

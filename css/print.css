@@ -1,0 +1,56 @@
+@media print {
+  @page  {
+
+  }
+
+  h1, h2, h3, h4, h5 {
+    page-break-after: avoid;
+  }
+  table, figure {
+    page-break-inside: avoid;
+  }
+
+  div {
+    float: none !important;
+  }
+
+  .htmlDoc_menu {
+    page-break-after: always;
+    position: static;
+  }
+
+  .htmlDoc_menu h2 {
+    display:block !important;
+  }
+
+  .htmlDoc_appendix {
+    page-break-before: always;
+  }
+
+  .htmlDoc_image {
+    display: inline-block !important;
+    padding-bottom: 1.5em;
+    position: relative;
+  }
+
+  .htmlDoc_image span {
+    position: absolute;
+    bottom: 0.5em;
+    left: 0px;
+  }
+
+  .htmlDoc_table {
+    display: table !important;;
+    padding-bottom: 1.5em;
+    position: relative;
+  }
+
+  .htmlDoc_table span {
+    position: absolute;
+    bottom: 0.5em;
+    left: 2px;
+  }
+  img {
+    position: relative;
+  }
+}

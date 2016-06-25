@@ -15,31 +15,88 @@ Here the Javascript side:
     /**
      * if you only want generate the table of content
      */
-    $('#menu').buildToc({
-      depth: 0,
-      fixedAt: false,
-      format: false,
-      smoothScrolling: false,
-    });
-
+    /*$('#menu').buildToc({
+     depth: 0,
+     fixedAt: false,
+     format: false,
+     smoothScrolling: false,
+     });
+     */
     /**
      * if you use the import function and want to generate the table of content
      */
-    $('import').importHTML({
-      menu: $('#menu'),
-    });
-
+    /* $('import').importHTML({
+     menu: $('#menu'),
+     });
+     */
     /**
      * you can use the settings object
      */
-    $('import').importHTML({
-      menu: $('#menu'),
-      menuSettings: {
+    $('div').importHTML({
+      menu: {
+        appendTo: $('#menu'),
         depth: 0,
-        fixedAt: false,
-        format: false,
-        smoothScrolling: false,
-      }
+        fixedAt: true,
+        format: true,
+        smoothScrolling: true,
+      },
+      normaliseImages: true,
+      normaliseTables: true,
+      normaliseExamples: true,
+      // for explicit generation
+      /*
+      if appendTo not defined, it will append to $('body')
+      listOfExamples: {
+        appendTo: $('#listing')
+      },
+       // for explicit generation
+      listOfTables: {
+        appendTo: $('#listing')
+      },
+       // for explicit generation
+      listOfFigure: {
+        appendTo: $('#listing')
+      }, */
+      /**
+        *  if appendTo not defined, it will append to $('body')
+        *  generate appendix automated with list of examples. list of tables and list of figures
+        */
+      appendix: {
+        appendTo: $('#listing'),
+      },
+      /**
+       *
+       deaktivate the specifics lists:
+      appendix: {
+        appendTo: $('#listing'),
+        listOfFigure : false,
+        listOfTables : false,
+        listOfExamples : false
+      },
+       */
+      /* Comming soon
+      bibliography: true,
+      footnotes: true,
+      glossary: true,
+      */
     });
 
+
 you can see a live demo under https://mafflerbach.github.io/htmlDoc/
+
+###Dealing with print header an footer:
+Chrome -> uncheck option by header and footer
+
+Edge -> Select Off by  header and footer
+
+internet explorer:
+
+Before printing:
+
+File -> Page Setup, under header and footer set all options to empty
+
+firefox:
+
+Before printing:
+
+File -> Page Setup, under header and footer set all options to empty
