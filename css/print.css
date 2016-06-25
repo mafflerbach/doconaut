@@ -14,9 +14,13 @@
     float: none !important;
   }
 
+  .htmlDoc_fixed {
+    position: static !important;
+  }
+
   .htmlDoc_menu {
     page-break-after: always;
-    position: static;
+    position: static !important;
   }
 
   .htmlDoc_menu h2 {
