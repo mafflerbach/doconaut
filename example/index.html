@@ -47,65 +47,13 @@
     /**
      * you can use the settings object
      */
-    $('div').importHTML({
+    $('div').htmlDoc({
       menu: {
         appendTo: $('#menu'),
-        depth: 0,
-        fixedAt: true,
-        format: true,
-        smoothScrolling: true,
       },
-      normaliseImages: true,
-      normaliseTables: true,
-      normaliseExamples: true,
-      // for explicit generation
-      /*
-      if appendTo not defined, it will append to $('body')
-      listOfExamples: {
-        appendTo: $('#listing')
-      },
-       // for explicit generation
-      listOfTables: {
-        appendTo: $('#listing')
-      },
-       // for explicit generation
-      listOfFigure: {
-        appendTo: $('#listing')
-      },
-       // for explicit generation
-      bibliography: {
-        appendTo: $('#listing')
-      },
-       // for explicit generation
-      footnotes: {
-        appendTo: $('#listing')
-      },
-       // for explicit generation
-      glossary: {
-        appendTo: $('#listing')
-      },
-
-      */
-      /**
-        *  if appendTo not defined, it will append to $('body')
-        *  generate appendix automated with list of examples. list of tables and list of figures
-        */
       appendix: {
-        appendTo: $('#listing'),
-      },
-      /**
-       *
-       deaktivate the specifics lists:
-      appendix: {
-        appendTo: $('#listing'),
-        listOfFigure : false,
-        listOfTables : false,
-        listOfExamples : false
-        glossary : false
-        footnotes : false
-        bibliography : false
-      },
-       */
+        appendTo: $('#listing')
+      }
     });
 
   </script>

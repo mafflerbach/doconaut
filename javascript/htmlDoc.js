@@ -18,14 +18,14 @@
   }
 
   function getSelector(settings) {
-    if (settings.menu.depth == 0) {
+    if (settings.menu.depth == 0 || settings.menu.depth == undefined) {
       settings.menu.depth = 6;
     }
     var selectorArr = [];
     for (var i = 1; i <= settings.menu.depth; i++) {
       selectorArr.push("h" + i);
     }
-    return selector = selectorArr.join(',');
+    return selectorArr.join(',');
   }
 
   function getClass(settings, obj, headline) {
@@ -54,7 +54,7 @@
       e.preventDefault();
       var target = this.hash;
       var $target = $(target);
-      var selector = "*[id='" + this.hash.replace('#', '') + "']";
+
       $('html, body').stop().animate({
         'scrollTop': $target.offset().top
       }, 400, 'swing', function () {
@@ -86,9 +86,9 @@
           '<h2 style="display:none;">Table of Contents</h2>' +
           '<ul>';
 
-      var headlines = []
+      var headlines = [];
       $(selector).each(function () {
-        var id = getGuid($(this).text(), headlines)
+        var id = getGuid($(this).text(), headlines);
 
         if ($(this)[0].className != '') {
 
@@ -96,7 +96,7 @@
         var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\"" + $(this)[0].className + "\">" + $(this).text() + "</" + $(this)[0].nodeName + "></a>";
         $(this).replaceWith(replacement);
 
-        var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).text() + '</a>')
+        var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).text() + '</a>');
         getClass(settings, listelem, $(this));
         content += listelem[0].outerHTML;
       });
@@ -133,27 +133,24 @@
          */
         deferreds.push(
             $.get(link[0])
-        )
+        );
         deferreds.push(
             mee
         )
       }
-    })
+    });
 
     return deferreds;
   }
 
   function getWrapper(element, text, className) {
-
-    var wrapper = '<div class="' + className + '">' +
+    return '<div class="' + className + '">' +
         element +
         '<span><em>' + text + '</em></span>' +
         '</div>';
-
-    return wrapper
   }
 
-  function normaliseElement(element, attr, classname, options) {
+  function normaliseElement(element, attr, classname) {
     element.each(function () {
       if ($(this).attr(attr) != undefined) {
         var wrapper = getWrapper($(this)[0].outerHTML, $(this).attr(attr), classname);
@@ -174,7 +171,7 @@
           c++;
         }
       }
-      id += "_" + c
+      id += "_" + c;
       headlines.push(id);
     }
 
@@ -182,18 +179,15 @@
   }
 
 
-  function generateList(header, className, element, attr, settings) {
+  function generateList(header, className, element, attr) {
     var content = '<div class="' + className + '"><h3>' + header + '</h3><ul>';
-
     var headlines = [];
     element.each(function () {
-
       if ($(this).attr(attr) != undefined) {
         var id = getGuid($(this).attr(attr), headlines);
       }
-
       $(this).attr('id', id);
-      var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).attr(attr) + '</a>')
+      var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).attr(attr) + '</a>');
       content += listelem[0].outerHTML;
     });
     content += '<div></ul>';
@@ -203,16 +197,17 @@
 
   function applyImports(deferreds, settings) {
     $.when.apply($, deferreds).then(function () {
+      var content = '';
       for (var i = 0; i < deferreds.length; i = i + 2) {
         if (deferreds[i + 1].link[1] != undefined) {
-          var content = $(deferreds[i].responseText).find('#' + deferreds[i + 1].link[1]);
+          content = $(deferreds[i].responseText).find('#' + deferreds[i + 1].link[1]);
           deferreds[i + 1].obj.replaceWith($(content.html()));
         } else {
-          var content = $(deferreds[i].responseText).find('content');
+          content = $(deferreds[i].responseText).find('content');
           var append = '';
           $(content).each(function () {
             append += $(this).html();
-          })
+          });
           deferreds[i + 1].obj.replaceWith(append);
         }
       }
@@ -287,7 +282,6 @@
 
 
   function collectSpecialContent(ids) {
-    var selector = '';
     for (var i = 0; i < ids.length; i++) {
       ids[i] = '#' + ids[i];
     }
@@ -295,7 +289,6 @@
   }
 
   function sortGlossary(elements) {
-
     function sortElements(a, b) {
       return ($(b).attr('id').toUpperCase()) < ($(a).attr('id').toUpperCase()) ? 1 : -1;
     }
@@ -304,9 +297,9 @@
   }
 
   function emphasisSepcialTags(element) {
-    var ids = []
+    var ids = [];
     element.each(function () {
-      var id = $(this).text().replace(/ /g, '_')
+      var id = $(this).text().replace(/ /g, '_');
       ids.push(id);
       var content = "<a href='#" + id + "'> <em>" + $(this).text() + "</em></a>";
       $(this).replaceWith(content);
@@ -315,59 +308,72 @@
   }
 
   function addAlphabet(nodes) {
-
     function getWrapper(element) {
-
-      var wrapp = "<div><div class='col-3-12' id='" + element.attr('id') + "'>" +
+      return "<div><div class='col-3-12' id='" + element.attr('id') + "'>" +
           element.attr('id').replace(/_/g, ' ') +
           "</div>" +
           "<div class='col-9-12'>" +
           element.html() +
           "</div></div>";
-      return wrapp;
     }
 
-    var alpahbet = []
-    parent = $("<div class='htmlDoc_glossary'>");
-
+    var alphabet = [];
+    var parent = $("<div class='htmlDoc_glossary'>");
 
     nodes.each(function () {
-
       var letter = $(this).attr('id')[0].toUpperCase();
-      if (!inArray(letter, alpahbet)) {
+      if (!inArray(letter, alphabet)) {
         var c = $('<div class="htmlDoc_letterSection"/>');
-        alpahbet.push(letter);
+        alphabet.push(letter);
         letter = $('<div class="htmlDoc_letter"><span id="letter_' + letter + '">' + letter + '</span></div>');
         c.append(letter);
-
-        var wrapp = getWrapper($(this));
-
-        c.append($(wrapp).addClass("glossentry grid "));
+        c.append($(getWrapper($(this))).addClass("glossentry grid "));
       } else {
-        var wrapp = getWrapper($(this));
-        parent.find('#letter_' + letter).parent().parent().append($(wrapp).addClass("glossentry grid"));
+        parent.find('#letter_' + letter).parent().parent().append($(getWrapper($(this))).addClass("glossentry grid"));
       }
       parent.append(c);
-    })
-
+    });
 
     return parent
   }
 
-  $.fn.importHTML = function (options) {
+  function appendix(element, options) {
+    var settings = $.extend({}, options);
+    var content = "<h2 class='htmlDoc_appendix'>Appendix</h2>";
+    element.append(content);
+    if (settings.appendix.listOfExamples != false) {
+      element.append(generateList('List of Examples', 'htmlDoc_loe', $('code'), 'title', settings));
+    }
+    if (settings.appendix.listOfFigure != false) {
+      element.append(generateList('List of Figures', 'htmlDoc_figures', $('img'), 'title', settings));
+    }
+    if (settings.appendix.listOfTables != false) {
+      element.append(generateList('List of Tables', 'htmlDoc_lot', $('table'), 'summary', settings));
+    }
+    if (settings.appendix.bibliography != false) {
+      element.bibliography();
+    }
+    if (settings.appendix.glossary != false) {
+      element.glossary();
+    }
+    if (settings.appendix.footnotes != false) {
+      element.footnotes();
+    }
+  }
+
+  $.fn.htmlDoc = function (options) {
     var settings = $.extend({
-      menu: '',
-      normaliseImages: false,
-      normaliseTables: false,
-      normaliseExamples: false,
+      menu: false,
+      normaliseImages: true,
+      normaliseTables: true,
+      normaliseExamples: true,
       listOfExamples: false,
       listOfTables: false,
-      appendix: false,
+      appendix: true,
       listOfFigure: false,
       bibliography: false,
       footnotes: false,
-      glossary: false,
-
+      glossary: false
     }, options);
 
     var deferreds = getResponse($(this));
@@ -386,32 +392,8 @@
     normaliseElement($('code'), 'title', 'htmlDoc_code', options);
   };
 
-
   $.fn.buildAppendix = function (options) {
-    var settings = $.extend({}, options);
-    var content = "<h2 class='htmlDoc_appendix'>Appendix</h2>";
-    $(this).append(content);
-    if (settings.appendix.listOfExamples != false) {
-      $(this).append(generateList('List of Examples', 'htmlDoc_loe', $('code'), 'title', settings));
-    }
-    if (settings.appendix.listOfFigure != false) {
-      $(this).append(generateList('List of Figures', 'htmlDoc_figures', $('img'), 'title', settings));
-    }
-    if (settings.appendix.listOfTables != false) {
-      $(this).append(generateList('List of Tables', 'htmlDoc_lot', $('table'), 'summary', settings));
-    }
-    if (settings.appendix.bibliography != false) {
-     $(this).bibliography();
-    }
-    if (settings.appendix.glossary != false) {
-      $(this).glossary();
-    }
-
-    if (settings.appendix.footnotes != false) {
-     $(this).footnotes();
-    }
-
-
+    appendix($(this), options);
   };
 
   $.fn.listOfExamples = function (options) {
@@ -420,35 +402,28 @@
     $(this).append(content);
   };
 
-  $.fn.glossary = function (options) {
-    var settings = $.extend({}, options);
+  $.fn.glossary = function () {
     var ids = emphasisSepcialTags($('glossentry'));
-    var nodes = collectSpecialContent(ids)
-    nodes = sortGlossary(nodes);
-    nodes = addAlphabet(nodes);
-
+    var nodes = addAlphabet(sortGlossary(collectSpecialContent(ids)));
     var content = "<div><h3>Glossary</h3>";
     nodes.each(function () {
       content += $(this)[0].outerHTML;
-    })
+    });
     content += "</div>";
     $(this).append(content);
   };
 
   $.fn.footnotes = function (options) {
-    var settings = $.extend({}, options);
+    // var settings = $.extend({}, options);
   };
 
-
-  $.fn.bibliography = function (options) {
-    var settings = $.extend({}, options);
+  $.fn.bibliography = function () {
     var ids = emphasisSepcialTags($('biblioentry'));
-    var nodes = collectSpecialContent(ids)
-
+    var nodes = collectSpecialContent(ids);
     var content = "<div><h3>Bibliography</h3>";
     nodes.each(function () {
       content += $(this)[0].outerHTML;
-    })
+    });
     content += "</div>";
     $(this).append(content);
   };
