@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="css/print.css"/>
-    <link rel="stylesheet" href="css/simplegrid.css"/>
-    <link rel="stylesheet" href="css/htmlDoc.css"/>
+    <link rel="stylesheet" href="../css/print.css"/>
+    <link rel="stylesheet" href="../css/simplegrid.css"/>
+    <link rel="stylesheet" href="../css/htmlDoc.css"/>
   </head>
   <body>
     <div class="grid grid-pad">
@@ -13,8 +13,8 @@
 
       <div class="col-8-12">
         <div class="content">
-
           <!-- import the html fragment with the id content1-->
+          <div src="specialTags.xml"></div>
           <div src="import.xml"></div>
         </div>
         <div id="listing">
@@ -24,7 +24,7 @@
     </div>
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  <script src="javascript/htmlDoc.js"></script>
+  <script src="../javascript/htmlDoc.js"></script>
   <script type="text/javascript">
 
     /**
@@ -71,7 +71,21 @@
        // for explicit generation
        listOfFigure: {
        appendTo: $('#listing')
-       }, */
+       },
+       // for explicit generation
+       bibliography: {
+       appendTo: $('#listing')
+       },
+       // for explicit generation
+       footnotes: {
+       appendTo: $('#listing')
+       },
+       // for explicit generation
+       glossary: {
+       appendTo: $('#listing')
+       },
+
+       */
       /**
        *  if appendTo not defined, it will append to $('body')
        *  generate appendix automated with list of examples. list of tables and list of figures
@@ -87,12 +101,10 @@
         listOfFigure : false,
         listOfTables : false,
         listOfExamples : false
+        glossary : false
+        footnotes : false
+        bibliography : false
       },
-       */
-      /* Comming soon
-       bibliography: true,
-       footnotes: true,
-       glossary: true,
        */
     });
 

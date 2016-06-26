@@ -57,9 +57,27 @@ Here the Javascript side:
       listOfFigure: {
         appendTo: $('#listing')
       }, */
+      // for explicit generation
+      glossary: {
+        appendTo: $('#listing')
+      }, */
+      // for explicit generation
+      bibliography: {
+        appendTo: $('#listing')
+      }, */
+      // for explicit generation
+      footnotes: {
+        appendTo: $('#listing')
+      }, */
       /**
         *  if appendTo not defined, it will append to $('body')
-        *  generate appendix automated with list of examples. list of tables and list of figures
+        *  generate appendix automated with
+        *  list of examples
+        *  list of tables
+        *  list of figures
+        *  bibliography
+        *  glossary
+        *  footnotes
         */
       appendix: {
         appendTo: $('#listing'),
@@ -72,13 +90,11 @@ Here the Javascript side:
         listOfFigure : false,
         listOfTables : false,
         listOfExamples : false
+        footnotes : false
+        bibliography : false
+        glossary : false
       },
        */
-      /* Comming soon
-      bibliography: true,
-      footnotes: true,
-      glossary: true,
-      */
     });
 
 
