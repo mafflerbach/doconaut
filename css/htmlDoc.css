@@ -52,3 +52,25 @@ code {
   padding-bottom: 1.5em;
   position: relative;
 }
+
+.htmlDoc_letter {
+
+}
+.htmlDoc_letter > span {
+  border: 1px solid;
+  padding: 0.5rem;
+  display: inline-block;
+
+}
+
+.htmlDoc_letterSection {
+  padding: 0 0 1.5rem 0;
+}
+
+.glossentry {
+  margin: 0.5rem 0;
+}
+
+.htmlDoc_entrybox {
+
+}
