@@ -88,14 +88,12 @@
 
       var headlines = []
       $(selector).each(function () {
+        var id = getGuid($(this).text(), headlines)
 
-        var id = getGuid($(this).text(), headlines )
-
-        console.log($(this)[0].className)
         if ($(this)[0].className != '') {
 
         }
-        var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\""+$(this)[0].className+"\">" + $(this).text() + "</" + $(this)[0].nodeName + "></a>";
+        var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\"" + $(this)[0].className + "\">" + $(this).text() + "</" + $(this)[0].nodeName + "></a>";
         $(this).replaceWith(replacement);
 
         var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).text() + '</a>')
@@ -229,14 +227,14 @@
         $('body').normalizeTables();
       }
       if (settings.appendix != false) {
-        if(settings.appendix.appendTo != undefined) {
+        if (settings.appendix.appendTo != undefined) {
           settings.appendix.appendTo.buildAppendix(settings);
         } else {
           $('body').buildAppendix(settings);
         }
       }
       if (settings.listOfExamples != false) {
-        if(settings.listOfExamples.appendTo != undefined) {
+        if (settings.listOfExamples.appendTo != undefined) {
           settings.listOfExamples.appendTo.listOfExamples();
         } else {
           $('body').listOfExamples();
@@ -256,6 +254,27 @@
           $('body').listOfTables();
         }
       }
+      if (settings.glossary != false) {
+        if (settings.glossary.appendTo != undefined) {
+          settings.glossary.appendTo.glossary();
+        } else {
+          $('body').glossary();
+        }
+      }
+      if (settings.footnotes != false) {
+        if (settings.footnotes.appendTo != undefined) {
+          settings.footnotes.appendTo.footnotes();
+        } else {
+          $('body').footnotes();
+        }
+      }
+      if (settings.bibliography != false) {
+        if (settings.bibliography.appendTo != undefined) {
+          settings.bibliography.appendTo.bibliography();
+        } else {
+          $('body').bibliography();
+        }
+      }
       if (settings.menu != '') {
         settings.menu.appendTo.buildToc(settings);
         if (window.location.hash != '') {
@@ -266,6 +285,75 @@
     })
   }
 
+
+  function collectSpecialContent(ids) {
+    var selector = '';
+    for (var i = 0; i < ids.length; i++) {
+      ids[i] = '#' + ids[i];
+    }
+    return $(ids.join(',')).detach();
+  }
+
+  function sortGlossary(elements) {
+
+    function sortElements(a, b) {
+      return ($(b).attr('id').toUpperCase()) < ($(a).attr('id').toUpperCase()) ? 1 : -1;
+    }
+
+    return elements.sort(sortElements);
+  }
+
+  function emphasisSepcialTags(element) {
+    var ids = []
+    element.each(function () {
+      var id = $(this).text().replace(/ /g, '_')
+      ids.push(id);
+      var content = "<a href='#" + id + "'> <em>" + $(this).text() + "</em></a>";
+      $(this).replaceWith(content);
+    });
+    return ids;
+  }
+
+  function addAlphabet(nodes) {
+
+    function getWrapper(element) {
+
+      var wrapp = "<div><div class='col-3-12' id='" + element.attr('id') + "'>" +
+          element.attr('id').replace(/_/g, ' ') +
+          "</div>" +
+          "<div class='col-9-12'>" +
+          element.html() +
+          "</div></div>";
+      return wrapp;
+    }
+
+    var alpahbet = []
+    parent = $("<div class='htmlDoc_glossary'>");
+
+
+    nodes.each(function () {
+
+      var letter = $(this).attr('id')[0].toUpperCase();
+      if (!inArray(letter, alpahbet)) {
+        var c = $('<div class="htmlDoc_letterSection"/>');
+        alpahbet.push(letter);
+        letter = $('<div class="htmlDoc_letter"><span id="letter_' + letter + '">' + letter + '</span></div>');
+        c.append(letter);
+
+        var wrapp = getWrapper($(this));
+
+        c.append($(wrapp).addClass("glossentry grid "));
+      } else {
+        var wrapp = getWrapper($(this));
+        parent.find('#letter_' + letter).parent().parent().append($(wrapp).addClass("glossentry grid"));
+      }
+      parent.append(c);
+    })
+
+
+    return parent
+  }
+
   $.fn.importHTML = function (options) {
     var settings = $.extend({
       menu: '',
@@ -274,11 +362,12 @@
       normaliseExamples: false,
       listOfExamples: false,
       listOfTables: false,
-      bibliography: false,
-      footnotes: false,
       appendix: false,
       listOfFigure: false,
+      bibliography: false,
+      footnotes: false,
       glossary: false,
+
     }, options);
 
     var deferreds = getResponse($(this));
@@ -300,26 +389,67 @@
 
   $.fn.buildAppendix = function (options) {
     var settings = $.extend({}, options);
-
     var content = "<h2 class='htmlDoc_appendix'>Appendix</h2>";
-
+    $(this).append(content);
     if (settings.appendix.listOfExamples != false) {
-
-      content += generateList('List of Examples', 'htmlDoc_loe', $('code'), 'title', settings);
+      $(this).append(generateList('List of Examples', 'htmlDoc_loe', $('code'), 'title', settings));
     }
     if (settings.appendix.listOfFigure != false) {
-      content += generateList('List of Figures', 'htmlDoc_figures', $('img'), 'title', settings);
+      $(this).append(generateList('List of Figures', 'htmlDoc_figures', $('img'), 'title', settings));
     }
     if (settings.appendix.listOfTables != false) {
-      content += generateList('List of Tables', 'htmlDoc_lot', $('table'), 'summary', settings);
+      $(this).append(generateList('List of Tables', 'htmlDoc_lot', $('table'), 'summary', settings));
+    }
+    if (settings.appendix.bibliography != false) {
+     $(this).bibliography();
+    }
+    if (settings.appendix.glossary != false) {
+      $(this).glossary();
     }
 
-    $(this).append(content);
+    if (settings.appendix.footnotes != false) {
+     $(this).footnotes();
+    }
+
 
   };
+
   $.fn.listOfExamples = function (options) {
     var settings = $.extend({}, options);
     var content = generateList('List of Examples', 'htmlDoc_loe', $('code'), 'title', settings);
+    $(this).append(content);
+  };
+
+  $.fn.glossary = function (options) {
+    var settings = $.extend({}, options);
+    var ids = emphasisSepcialTags($('glossentry'));
+    var nodes = collectSpecialContent(ids)
+    nodes = sortGlossary(nodes);
+    nodes = addAlphabet(nodes);
+
+    var content = "<div><h3>Glossary</h3>";
+    nodes.each(function () {
+      content += $(this)[0].outerHTML;
+    })
+    content += "</div>";
+    $(this).append(content);
+  };
+
+  $.fn.footnotes = function (options) {
+    var settings = $.extend({}, options);
+  };
+
+
+  $.fn.bibliography = function (options) {
+    var settings = $.extend({}, options);
+    var ids = emphasisSepcialTags($('biblioentry'));
+    var nodes = collectSpecialContent(ids)
+
+    var content = "<div><h3>Bibliography</h3>";
+    nodes.each(function () {
+      content += $(this)[0].outerHTML;
+    })
+    content += "</div>";
     $(this).append(content);
   };
 

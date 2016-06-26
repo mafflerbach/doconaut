@@ -1,0 +1,76 @@
+<root>
+  <content id="biblioentry">
+    <p>
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+      amet,
+      <biblioentry>sadipscing</biblioentry>
+      sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+    </p>
+
+
+  </content>
+  <content id="glossentry">
+    <p>
+      Stet clita kasd gubergren,
+      <glossentry>no sea takimata</glossentry>
+      sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+      amet,
+      <glossentry>consetetur</glossentry>
+      sadipscing elitr, sed diam nonumy eirmod
+      <glossentry>tempor</glossentry>
+      invidunt ut labore et
+      <glossentry>dolore</glossentry>
+      <glossentry>Dolores</glossentry>
+      magna aliquyam
+    </p>
+
+  </content>
+
+  <content id="footnote">
+    <p>
+      Stet clita kasd gubergren,
+      <footnote>no sea takimata</footnote>
+      sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+      amet,
+      <footnote>consetetur</footnote>
+      sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+    </p>
+  </content>
+
+  <content id="glossary">
+    <div id="no_sea_takimata">
+      description of
+      <em>no sea takimata</em>
+    </div>
+    <div id="consetetur">
+      description of
+      <em>consetetur</em>
+    </div>
+    <div id="tempor">
+      description of
+      <em>tempor</em>
+    </div>
+    <div id="dolore">
+      description of
+      <em>dolore</em>
+      sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+      sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+      sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam sadipscing elitr, sed
+      diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+
+    </div>
+    <div id="Dolores">
+      description of
+      <em>dolores</em>
+    </div>
+  </content>
+
+  <content id="bibligraphy">
+    <div id="sadipscing">
+      biblio of
+      <em>sadipscing</em>
+    </div>
+  </content>
+
+
+</root>
