@@ -2,7 +2,7 @@ I have used for a while github.io for documentation a project.
 In this case, i'am implement a little helper script, which generate a TOC from all h* tags.
 I have also implemented an import Tag for a better organisation for my different sections and of course for reusing some documentation snippets.
 
-The genearl using ist quite simple:
+The general using ist quite simple:
 
     <!-- import the complete document -->
     <import src="import.xml"></import>
@@ -10,14 +10,40 @@ The genearl using ist quite simple:
     <!-- import the html fragment with the id content1-->
     <import src="import.xml#content1"></import>
 
+I add some speacial tags, too.
+
+    <glossentry>foreign word with blank</<glossentry>
+    <glossentry>singel</<glossentry>
+
+It should be noted that if you using this tags, must you write by your selfe the explanation. You connected your entry and the explanation with the id attribute. In these Examples:
+
+    <div id="foreign_word_with_blank">
+      word_or_sentence
+    </div>
+    <div id="singel">
+      description of singel
+    </div>
+
+The javascript part generate from the content of <glossentry/> a id. It replace all whitespace with underlines.
+Furthermore the entry will be replaces with an anchor to the glossary.
+
+All explanations will be collected sorted and edited. It will be automated appended to the Appendix, or to the specified element.
+
+The same procedure apply to <biblioentry/> tags.
+
+    <biblioentry>keyword</<biblioentry>
+
+
+    <div id="keyword">
+      biblio entry for keyword
+    </div>
+
+
 The shortest way to use the complete features:
 
     $('div').doconaut({
       menu: {
         appendTo: $('#menu'),
-        fixedAt: 0,
-        format: true,
-        smoothScrolling : true
       },
       appendix: {
         appendTo: $('#listing')
