@@ -14,42 +14,42 @@
     float: none !important;
   }
 
-  .htmlDoc_fixed {
+  .doconaut_fixed {
     position: static !important;
   }
 
-  .htmlDoc_menu {
+  .doconaut_menu {
     page-break-after: always;
     position: static !important;
   }
 
-  .htmlDoc_menu h2 {
+  .doconaut_menu h2 {
     display:block !important;
   }
 
-  .htmlDoc_appendix {
+  .doconaut_appendix {
     page-break-before: always;
   }
 
-  .htmlDoc_image {
+  .doconaut_image {
     display: inline-block !important;
     padding-bottom: 1.5em;
     position: relative;
   }
 
-  .htmlDoc_image span {
+  .doconaut_image span {
     position: absolute;
     bottom: 0.5em;
     left: 0px;
   }
 
-  .htmlDoc_table {
+  .doconaut_table {
     display: table !important;;
     padding-bottom: 1.5em;
     position: relative;
   }
 
-  .htmlDoc_table span {
+  .doconaut_table span {
     position: absolute;
     bottom: 0.5em;
     left: 2px;

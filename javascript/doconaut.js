@@ -31,7 +31,7 @@
   function getClass(settings, obj, headline) {
 
     if (settings.menu.format) {
-      var CssClass = "htmlDoc_" + headline[0].nodeName;
+      var CssClass = "doconaut_" + headline[0].nodeName;
       obj.addClass(CssClass)
     }
   }
@@ -42,9 +42,9 @@
     }
     $(window).bind('scroll', function () {
       if ($(window).scrollTop() > position) {
-        target.addClass('htmlDoc_fixed');
+        target.addClass('doconaut_fixed');
       } else {
-        target.removeClass('htmlDoc_fixed');
+        target.removeClass('doconaut_fixed');
       }
     });
   }
@@ -82,7 +82,7 @@
     var selector = getSelector(settings);
 
     if ($(selector).length > 0) {
-      var content = '<div class="htmlDoc_menu">' +
+      var content = '<div class="doconaut_menu">' +
           '<h2 style="display:none;">Table of Contents</h2>' +
           '<ul>';
 
@@ -318,14 +318,14 @@
     }
 
     var alphabet = [];
-    var parent = $("<div class='htmlDoc_glossary'>");
+    var parent = $("<div class='doconaut_glossary'>");
 
     nodes.each(function () {
       var letter = $(this).attr('id')[0].toUpperCase();
       if (!inArray(letter, alphabet)) {
-        var c = $('<div class="htmlDoc_letterSection"/>');
+        var c = $('<div class="doconaut_letterSection"/>');
         alphabet.push(letter);
-        letter = $('<div class="htmlDoc_letter"><span id="letter_' + letter + '">' + letter + '</span></div>');
+        letter = $('<div class="doconaut_letter"><span id="letter_' + letter + '">' + letter + '</span></div>');
         c.append(letter);
         c.append($(getWrapper($(this))).addClass("glossentry grid "));
       } else {
@@ -339,16 +339,16 @@
 
   function appendix(element, options) {
     var settings = $.extend({}, options);
-    var content = "<h2 class='htmlDoc_appendix'>Appendix</h2>";
+    var content = "<h2 class='doconaut_appendix'>Appendix</h2>";
     element.append(content);
     if (settings.appendix.listOfExamples != false) {
-      element.append(generateList('List of Examples', 'htmlDoc_loe', $('code'), 'title', settings));
+      element.append(generateList('List of Examples', 'doconaut_loe', $('code'), 'title', settings));
     }
     if (settings.appendix.listOfFigure != false) {
-      element.append(generateList('List of Figures', 'htmlDoc_figures', $('img'), 'title', settings));
+      element.append(generateList('List of Figures', 'doconaut_figures', $('img'), 'title', settings));
     }
     if (settings.appendix.listOfTables != false) {
-      element.append(generateList('List of Tables', 'htmlDoc_lot', $('table'), 'summary', settings));
+      element.append(generateList('List of Tables', 'doconaut_lot', $('table'), 'summary', settings));
     }
     if (settings.appendix.bibliography != false) {
       element.bibliography();
@@ -361,7 +361,7 @@
     }
   }
 
-  $.fn.htmlDoc = function (options) {
+  $.fn.doconaut = function (options) {
     var settings = $.extend({
       menu: false,
       normaliseImages: true,
@@ -381,15 +381,15 @@
   };
 
   $.fn.normalizeTables = function (options) {
-    normaliseElement($('table'), 'summary', 'htmlDoc_table', options);
+    normaliseElement($('table'), 'summary', 'doconaut_table', options);
   };
 
   $.fn.normalizeImages = function (options) {
-    normaliseElement($('img'), 'title', 'htmlDoc_image', options);
+    normaliseElement($('img'), 'title', 'doconaut_image', options);
   };
 
   $.fn.normalizeExamples = function (options) {
-    normaliseElement($('code'), 'title', 'htmlDoc_code', options);
+    normaliseElement($('code'), 'title', 'doconaut_code', options);
   };
 
   $.fn.buildAppendix = function (options) {
@@ -398,7 +398,7 @@
 
   $.fn.listOfExamples = function (options) {
     var settings = $.extend({}, options);
-    var content = generateList('List of Examples', 'htmlDoc_loe', $('code'), 'title', settings);
+    var content = generateList('List of Examples', 'doconaut_loe', $('code'), 'title', settings);
     $(this).append(content);
   };
 
@@ -430,13 +430,13 @@
 
   $.fn.listOfFigure = function (options) {
     var settings = $.extend({}, options);
-    var content = generateList('List of Figures', 'htmlDoc_figures', $('img'), 'title', settings);
+    var content = generateList('List of Figures', 'doconaut_figures', $('img'), 'title', settings);
     $(this).append(content);
   };
 
   $.fn.listOfTables = function (options) {
     var settings = $.extend({}, options);
-    var content = generateList('List of Tables', 'htmlDoc_lot', $('table'), 'summary', settings);
+    var content = generateList('List of Tables', 'doconaut_lot', $('table'), 'summary', settings);
     $(this).append(content);
   };
 

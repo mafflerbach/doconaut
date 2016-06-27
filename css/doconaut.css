@@ -1,29 +1,29 @@
 
-.htmlDoc_H1 {
+.doconaut_H1 {
   margin: 0;
 }
 
-.htmlDoc_H2 {
+.doconaut_H2 {
   margin-left: 0.5rem;
 }
 
-.htmlDoc_H3 {
+.doconaut_H3 {
   margin-left: 1rem;
 }
 
-.htmlDoc_H4 {
+.doconaut_H4 {
   margin-left: 1.5rem;
 }
 
-.htmlDoc_H5 {
+.doconaut_H5 {
   margin-left: 2rem;
 }
 
-.htmlDoc_H6 {
+.doconaut_H6 {
   margin-left: 2.5rem;
 }
 
-.htmlDoc_fixed {
+.doconaut_fixed {
   position: fixed;
 }
 
@@ -33,37 +33,37 @@ code {
   padding: 2rem;
 }
 
-.htmlDoc_image {
+.doconaut_image {
   display: inline-block;
   padding-bottom: 1.5em;
   position: relative;
 }
 
-.htmlDoc_image span,
-.htmlDoc_table span,
-.htmlDoc_table span {
+.doconaut_image span,
+.doconaut_table span,
+.doconaut_table span {
   position: absolute;
   bottom: 0.5em;
   left: 0px;
 }
 
-.htmlDoc_table {
+.doconaut_table {
   display: table;
   padding-bottom: 1.5em;
   position: relative;
 }
 
-.htmlDoc_letter {
+.doconaut_letter {
 
 }
-.htmlDoc_letter > span {
+.doconaut_letter > span {
   border: 1px solid;
   padding: 0.5rem;
   display: inline-block;
 
 }
 
-.htmlDoc_letterSection {
+.doconaut_letterSection {
   padding: 0 0 1.5rem 0;
 }
 
@@ -71,6 +71,6 @@ code {
   margin: 0.5rem 0;
 }
 
-.htmlDoc_entrybox {
+.doconaut_entrybox {
 
 }
