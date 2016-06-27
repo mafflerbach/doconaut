@@ -88,15 +88,12 @@
 
       var headlines = [];
       $(selector).each(function () {
-        var id = getGuid($(this).text(), headlines);
-
-        if ($(this)[0].className != '') {
-
-        }
-        var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\"" + $(this)[0].className + "\">" + $(this).text() + "</" + $(this)[0].nodeName + "></a>";
+        var muu = $(this).children().remove().end().text($.trim($(this).text())).text().replace(/\r?\n|\r/g, '');
+        var string = muu.replace(/\s+/g, ' ');
+        var id = getGuid(string, headlines);
+        var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\"" + $(this)[0].className + "\">" + string + "</" + $(this)[0].nodeName + "></a>";
         $(this).replaceWith(replacement);
-
-        var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).text() + '</a>');
+        var listelem = $('<li/>').append('<a href="#' + id + '">' + string + '</a>');
         getClass(settings, listelem, $(this));
         content += listelem[0].outerHTML;
       });
@@ -182,16 +179,24 @@
   function generateList(header, className, element, attr) {
     var content = '<div class="' + className + '"><h3>' + header + '</h3><ul>';
     var headlines = [];
+    var count = 0;
     element.each(function () {
       if ($(this).attr(attr) != undefined) {
-        var id = getGuid($(this).attr(attr), headlines);
+        count++;
+        if ($(this).attr(attr) != undefined) {
+          var id = getGuid($(this).attr(attr), headlines);
+        }
+        $(this).attr('id', id);
+        var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).attr(attr) + '</a>');
+        content += listelem[0].outerHTML;
       }
-      $(this).attr('id', id);
-      var listelem = $('<li/>').append('<a href="#' + id + '">' + $(this).attr(attr) + '</a>');
-      content += listelem[0].outerHTML;
     });
     content += '<div></ul>';
-    return content;
+    if (count > 0 ) {
+      return content;
+    } else {
+      return '';
+    }
   }
 
 
@@ -341,13 +346,13 @@
     var settings = $.extend({}, options);
     var content = "<h2 class='doconaut_appendix'>Appendix</h2>";
     element.append(content);
-    if (settings.appendix.listOfExamples != false) {
+    if (settings.appendix.listOfExamples != false && $('code').length > 0) {
       element.append(generateList('List of Examples', 'doconaut_loe', $('code'), 'title', settings));
     }
-    if (settings.appendix.listOfFigure != false) {
+    if (settings.appendix.listOfFigure != false && $('img').length > 0) {
       element.append(generateList('List of Figures', 'doconaut_figures', $('img'), 'title', settings));
     }
-    if (settings.appendix.listOfTables != false) {
+    if (settings.appendix.listOfTables != false && $('table').length > 0) {
       element.append(generateList('List of Tables', 'doconaut_lot', $('table'), 'summary', settings));
     }
     if (settings.appendix.bibliography != false) {
@@ -410,7 +415,9 @@
       content += $(this)[0].outerHTML;
     });
     content += "</div>";
-    $(this).append(content);
+    if ($('glossentry').length > 0) {
+      $(this).append(content);
+    }
   };
 
   $.fn.footnotes = function (options) {
@@ -425,7 +432,9 @@
       content += $(this)[0].outerHTML;
     });
     content += "</div>";
-    $(this).append(content);
+    if ($('biblioentry').length > 0) {
+      $(this).append(content);
+    }
   };
 
   $.fn.listOfFigure = function (options) {

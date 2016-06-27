@@ -25,6 +25,7 @@
 
 .doconaut_fixed {
   position: fixed;
+  top:0;
 }
 
 code {
@@ -74,3 +75,4 @@ code {
 .doconaut_entrybox {
 
 }
+
