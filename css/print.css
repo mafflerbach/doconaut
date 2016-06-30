@@ -12,6 +12,7 @@
 
   div {
     float: none !important;
+    width: 100% !important;
   }
 
   .doconaut_fixed {
@@ -59,5 +60,12 @@
   }
   img {
     page-break-inside: auto; /* or 'auto' */
+  }
+  .doconaut_letterSection {
+
+  }
+
+  .doconaut_glossentry div {
+
   }
 }

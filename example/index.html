@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="../css/print.css"/>
+    <link rel="stylesheet" href="../css/print.css" media="print"/>
     <link rel="stylesheet" href="../css/simplegrid.css"/>
-    <link rel="stylesheet" href="../css/doconaut.css"/>
+    <link rel="stylesheet" href="../css/doconaut.css" media="screen"/>
   </head>
   <body>
     <div class="grid grid-pad">
@@ -14,8 +14,8 @@
       <div class="col-8-12">
         <div class="content">
           <!-- import the html fragment with the id content1-->
-          <div src="specialTags.xml"></div>
-          <div src="import.xml"></div>
+          <import src="specialTags.xml"></import>
+          <import src="import.xml"></import>
         </div>
         <div id="listing">
 
@@ -47,7 +47,7 @@
     /**
      * you can use the settings object
      */
-    $('div').doconaut({
+    $('import').doconaut({
       menu: {
         appendTo: $('#menu'),
         fixedAt: 0,

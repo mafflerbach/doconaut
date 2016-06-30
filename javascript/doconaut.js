@@ -5,11 +5,20 @@
           .toString(16)
           .substring(1);
     }
-
     return id;
     /*
      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
      s4() + '-' + s4() + s4() + s4(); */
+  }
+
+  function hash() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+    }
+     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+     s4() + '-' + s4() + s4() + s4();
   }
 
 
@@ -90,7 +99,11 @@
       $(selector).each(function () {
         var muu = $(this).children().remove().end().text($.trim($(this).text())).text().replace(/\r?\n|\r/g, '');
         var string = muu.replace(/\s+/g, ' ');
-        var id = getGuid(string, headlines);
+
+        var link = string.replace(/\'/, ' ');
+        link = link.replace(/\?/, '');
+
+        var id = getGuid(link, headlines);
         var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\"" + $(this)[0].className + "\">" + string + "</" + $(this)[0].nodeName + "></a>";
         $(this).replaceWith(replacement);
         var listelem = $('<li/>').append('<a href="#' + id + '">' + string + '</a>');
@@ -106,7 +119,7 @@
         activateScrolling();
       }
 
-      if (settings.menu.fixedAt != false) {
+      if (settings.menu.fixedAt !=  undefined) {
         activateFix(settings.menu.fixedAt, this);
       }
     }
@@ -192,7 +205,7 @@
       }
     });
     content += '<div></ul>';
-    if (count > 0 ) {
+    if (count > 0) {
       return content;
     } else {
       return '';
@@ -301,12 +314,16 @@
     return elements.sort(sortElements);
   }
 
-  function emphasisSepcialTags(element) {
+  function emphasisSpecialTags(element, bracket) {
     var ids = [];
     element.each(function () {
       var id = $(this).text().replace(/ /g, '_');
       ids.push(id);
-      var content = "<a href='#" + id + "'> <em>" + $(this).text() + "</em></a>";
+      if (bracket != undefined) {
+        var content = "<a href='#" + id + "'> <em>[" + $(this).text() + "]</em></a>";
+      } else {
+        var content = "<a href='#" + id + "'> <em>" + $(this).text() + "</em></a>";
+      }
       $(this).replaceWith(content);
     });
     return ids;
@@ -332,9 +349,9 @@
         alphabet.push(letter);
         letter = $('<div class="doconaut_letter"><span id="letter_' + letter + '">' + letter + '</span></div>');
         c.append(letter);
-        c.append($(getWrapper($(this))).addClass("glossentry grid "));
+        c.append($(getWrapper($(this))).addClass("doconaut_glossentry grid "));
       } else {
-        parent.find('#letter_' + letter).parent().parent().append($(getWrapper($(this))).addClass("glossentry grid"));
+        parent.find('#letter_' + letter).parent().parent().append($(getWrapper($(this))).addClass("doconaut_glossentry grid"));
       }
       parent.append(c);
     });
@@ -407,32 +424,72 @@
     $(this).append(content);
   };
 
+
+
+  $.fn.footnotes = function (options) {
+
+    $('footnote').each(function (index, val) {
+
+      var footnote = '';
+      var footnoteContent = '';
+      var content = '';
+      if ($(this).attr('src') != undefined) {
+        var parent = $(this).parent().parent();
+        var id = $(this).attr('src');
+        content = '<em><a href="#' + id + '"><sup>(' + (index + 1) + ')</sup></a></em> ';
+        $(this).replaceWith(content);
+
+        footnote = $('#' + id)[0].outerHTML;
+        footnoteContent = '<div class="footnote"><span><sup>(' + (index + 1) + ')</sup></span> ' + footnote + '</div>';
+
+        $('#' + id).remove();
+        parent.append(footnoteContent);
+        $(this).parent().append(footnoteContent);
+      } else {
+        var appendTo = $(this).parent().parent();
+        id = hash();
+        footnote = $(this)[0].outerHTML;
+        footnoteContent = '<div class="footnote" id='+id+'><span><sup>(' + (index + 1) + ')</sup></span> ' + footnote + '</div>';
+        content = '<em><a href="#' + id + '"><sup>(' + (index + 1) + ')</sup></a></em> ';
+        $(this).replaceWith(content);
+        appendTo.append($(footnoteContent));
+      }
+    });
+  };
   $.fn.glossary = function () {
-    var ids = emphasisSepcialTags($('glossentry'));
+    var count = $('glossentry').length;
+    var ids = emphasisSpecialTags($('glossentry'));
     var nodes = addAlphabet(sortGlossary(collectSpecialContent(ids)));
     var content = "<div><h3>Glossary</h3>";
     nodes.each(function () {
       content += $(this)[0].outerHTML;
     });
     content += "</div>";
-    if ($('glossentry').length > 0) {
+    if (count > 0) {
       $(this).append(content);
     }
   };
 
-  $.fn.footnotes = function (options) {
-    // var settings = $.extend({}, options);
-  };
-
   $.fn.bibliography = function () {
-    var ids = emphasisSepcialTags($('biblioentry'));
+    function getWrapper(element) {
+      return "<div><div class='col-1-12' id='" + element.attr('id') + "'>" +
+          element.attr('id') +
+          "</div>" +
+          "<div class='col-11-12'>" +
+          element.html() +
+          "</div></div>";
+    }
+
+    var count = $('biblioentry').length;
+    var ids = emphasisSpecialTags($('biblioentry'), true);
     var nodes = collectSpecialContent(ids);
     var content = "<div><h3>Bibliography</h3>";
     nodes.each(function () {
-      content += $(this)[0].outerHTML;
+
+      content += getWrapper($(this));
     });
     content += "</div>";
-    if ($('biblioentry').length > 0) {
+    if (count > 0) {
       $(this).append(content);
     }
   };
