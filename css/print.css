@@ -1,18 +1,51 @@
 @media print {
-  @page  {
+  @page {
 
   }
 
   h1, h2, h3, h4, h5 {
     page-break-after: avoid;
   }
+
   table, figure {
     page-break-inside: avoid;
   }
 
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   div {
-    float: none !important;
-    width: 100% !important;
+    float: inherit !important;
+    width: inherit !important;
+  }
+li {
+  list-style: none;
+}
+
+  .doconaut_H1 {
+    margin: 0;
+  }
+
+  .doconaut_H2 {
+    margin-left: 0.5rem;
+  }
+
+  .doconaut_H3 {
+    margin-left: 1rem;
+  }
+
+  .doconaut_H4 {
+    margin-left: 1.5rem;
+  }
+
+  .doconaut_H5 {
+    margin-left: 2rem;
+  }
+
+  .doconaut_H6 {
+    margin-left: 2.5rem;
   }
 
   .doconaut_fixed {
@@ -25,7 +58,7 @@
   }
 
   .doconaut_menu h2 {
-    display:block !important;
+    display: block !important;
   }
 
   .doconaut_appendix {
@@ -36,6 +69,7 @@
     display: inline-block !important;
     padding-bottom: 1.5em;
     position: relative;
+
   }
 
   .doconaut_image span {
@@ -55,12 +89,15 @@
     bottom: 0.5em;
     left: 2px;
   }
+
   img {
     position: relative;
   }
+
   img {
     page-break-inside: auto; /* or 'auto' */
   }
+
   .doconaut_letterSection {
 
   }

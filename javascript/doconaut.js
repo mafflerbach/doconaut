@@ -5,10 +5,8 @@
           .toString(16)
           .substring(1);
     }
+
     return id;
-    /*
-     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-     s4() + '-' + s4() + s4() + s4(); */
   }
 
   function hash() {
@@ -17,32 +15,24 @@
           .toString(16)
           .substring(1);
     }
-     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-     s4() + '-' + s4() + s4() + s4();
-  }
 
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+  }
 
   function scrollToElement(ele) {
     $(window).scrollTop(ele.offset().top);
   }
 
   function getSelector(settings) {
-    if (settings.menu.depth == 0 || settings.menu.depth == undefined) {
-      settings.menu.depth = 6;
+    if (settings.depth == 0 || settings.depth == undefined) {
+      settings.depth = 6;
     }
     var selectorArr = [];
-    for (var i = 1; i <= settings.menu.depth; i++) {
+    for (var i = 1; i <= settings.depth; i++) {
       selectorArr.push("h" + i);
     }
     return selectorArr.join(',');
-  }
-
-  function getClass(settings, obj, headline) {
-
-    if (settings.menu.format) {
-      var CssClass = "doconaut_" + headline[0].nodeName;
-      obj.addClass(CssClass)
-    }
   }
 
   function activateFix(position, target) {
@@ -82,44 +72,87 @@
 
   $.fn.buildToc = function (options) {
     var settings = $.extend({
-      depth: 0,
+      depth: 6,
       format: false,
       smoothScrolling: false,
       fixedAt: false
     }, options);
 
+    function removeSpaces(content) {
+      return content.replace(/\n/g, "")
+          .replace(/[\t ]+\</g, "<")
+          .replace(/\>[\t ]+\</g, "><")
+          .replace(/\>[\t ]+$/g, ">")
+          .replace(/\s+/g, ' ')
+          .replace(/\'/, ' ')
+          .replace(/\?/, '')
+          .replace(/\./, ' ');
+    }
+
     var selector = getSelector(settings);
 
     if ($(selector).length > 0) {
-      var content = '<div class="doconaut_menu">' +
-          '<h2 style="display:none;">Table of Contents</h2>' +
-          '<ul>';
+      var content = $('<div class="doconaut_menu">' +
+          '<h2 style="display:none;">Table of Contents</h2></div>');
 
       var headlines = [];
-      $(selector).each(function () {
-        var muu = $(this).children().remove().end().text($.trim($(this).text())).text().replace(/\r?\n|\r/g, '');
-        var string = muu.replace(/\s+/g, ' ');
+      for (var i = 0; i < $(selector).length; i++) {
+        var element = $($(selector).get(i));
 
-        var link = string.replace(/\'/, ' ');
-        link = link.replace(/\?/, '');
-
+        var link = removeSpaces(element.text());
+        var string = removeSpaces(element.html());
         var id = getGuid(link, headlines);
-        var replacement = "<a href=\"#" + id + "\"><" + $(this)[0].nodeName + " id=\"" + id + "\" class=\"" + $(this)[0].className + "\">" + string + "</" + $(this)[0].nodeName + "></a>";
-        $(this).replaceWith(replacement);
-        var listelem = $('<li/>').append('<a href="#' + id + '">' + string + '</a>');
-        getClass(settings, listelem, $(this));
-        content += listelem[0].outerHTML;
+
+        var replacement = "<a href=\"#" + id + "\">" +
+            "<" + element[0].nodeName + " id=\"" + id + "\" class=\"" + element[0].className + "\">" +
+            "" + string + "" +
+            "</" + element[0].nodeName + ">" +
+            "</a>";
+        element.replaceWith(replacement);
+      }
+
+      headlines = [];
+
+      var $result = content;
+      var curDepth = 0;
+
+      $(selector).addClass('hlp_heading');
+      $('.hlp_heading').each(function () {
+        var link = removeSpaces($(this).text());
+        var id = getGuid(link, headlines);
+
+        $(this).attr({'id': id});
+        var $li = $('<li></li>')
+            .append($('<a></a>')
+                .html($(this).html())
+                .attr({'href': '#' + id})
+            );
+        var depth = parseInt(this.tagName.substring(1));
+
+        if (settings.depth >= depth) {
+          if (depth > curDepth) { // going deeper
+            $result.append($('<ul/>').append($li));
+            $result = $li;
+          } else if (depth < curDepth) { // going shallower
+            $result.parents('ul:eq(' + (curDepth - depth - 1) + ')').append($li);
+            $result = $li;
+          } else { // same level
+            $result.parent().append($li);
+            $result = $li;
+          }
+          curDepth = depth;
+        }
       });
+      $result = $result.parents('ul:last');
+      $(selector).removeClass('hlp_heading');
 
-
-      content += '<div></ul>';
       this.append(content);
 
       if (settings.menu.smoothScrolling) {
         activateScrolling();
       }
 
-      if (settings.menu.fixedAt !=  undefined) {
+      if (settings.menu.fixedAt != undefined) {
         activateFix(settings.menu.fixedAt, this);
       }
     }
@@ -211,7 +244,6 @@
       return '';
     }
   }
-
 
   function applyImports(deferreds, settings) {
     $.when.apply($, deferreds).then(function () {
@@ -425,37 +457,31 @@
   };
 
 
-
   $.fn.footnotes = function (options) {
+    function getWrapper(id, footnote, index) {
+      return '<div class="doconaut_footnote" id=' + id + '><span><sup>(' + (index + 1) + ')</sup></span><div>' + footnote + '</div></div>';
+    }
 
+    function getSup(id, int) {
+      return '<em><a href="#' + id + '"><sup>(' + int + ')</sup></a></em> ';
+    }
+
+    var content = '';
     $('footnote').each(function (index, val) {
-
-      var footnote = '';
-      var footnoteContent = '';
-      var content = '';
+      var parent = $(this).parent().parent();
       if ($(this).attr('src') != undefined) {
-        var parent = $(this).parent().parent();
         var id = $(this).attr('src');
-        content = '<em><a href="#' + id + '"><sup>(' + (index + 1) + ')</sup></a></em> ';
-        $(this).replaceWith(content);
-
-        footnote = $('#' + id)[0].outerHTML;
-        footnoteContent = '<div class="footnote"><span><sup>(' + (index + 1) + ')</sup></span> ' + footnote + '</div>';
-
+        content = $('#' + id).html();
         $('#' + id).remove();
-        parent.append(footnoteContent);
-        $(this).parent().append(footnoteContent);
       } else {
-        var appendTo = $(this).parent().parent();
         id = hash();
-        footnote = $(this)[0].outerHTML;
-        footnoteContent = '<div class="footnote" id='+id+'><span><sup>(' + (index + 1) + ')</sup></span> ' + footnote + '</div>';
-        content = '<em><a href="#' + id + '"><sup>(' + (index + 1) + ')</sup></a></em> ';
-        $(this).replaceWith(content);
-        appendTo.append($(footnoteContent));
+        content = $(this).html();
       }
+      $(this).replaceWith(getSup(id, (index + 1)));
+      parent.append(getWrapper(id, content, index));
     });
   };
+
   $.fn.glossary = function () {
     var count = $('glossentry').length;
     var ids = emphasisSpecialTags($('glossentry'));
@@ -485,7 +511,6 @@
     var nodes = collectSpecialContent(ids);
     var content = "<div><h3>Bibliography</h3>";
     nodes.each(function () {
-
       content += getWrapper($(this));
     });
     content += "</div>";

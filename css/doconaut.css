@@ -73,3 +73,20 @@ code {
 .doconaut_entrybox {
 
 }
+
+.doconaut_menu  li {
+  list-style-type: decimal;
+}
+
+.doconaut_menu > ul  > li > ul > li{
+  list-style-type: upper-roman;
+}
+
+.doconaut_menu > ul  > li{
+  list-style-type: none;
+}
+
+
+.doconaut_footnote div {
+  display: inline;
+}
